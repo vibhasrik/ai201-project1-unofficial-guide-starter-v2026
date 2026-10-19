@@ -27,6 +27,8 @@
 
      Milestone 5. -->
 
+     I picked the city_guides corpus. This project is a RAG that can answer grounded questions about the city_guides documents. It can answer direct questions about locations included in the corpus. It will be clear when it doesn't know something. For example, the corpus has a document about Brightwater. The RAG can answer something like "When should I visit Brightwater?"
+
 ## Chunking Strategy
 
 **Chunk size:** one `##` section per chunk, with the guide's title on the first line (171 to 759 characters, 319 on average, 94 chunks)
