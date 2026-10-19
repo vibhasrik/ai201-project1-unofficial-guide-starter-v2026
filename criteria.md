@@ -4,13 +4,13 @@ Five criteria that say what "working" means for this system, written in unit 1
 **before** any results existed.
 
 An acceptance criterion names a target: a number, a count, a rate, or something
-a person could plainly observe. *"Retrieval works"* is an opinion. *"For at
+a person could plainly observe. _"Retrieval works"_ is an opinion. _"For at
 least 4 of my 5 test questions, the top results include a chunk containing the
-answer"* is a criterion.
+answer"_ is a criterion.
 
 Under each one, write a sentence or two on **why that target** and not a
 stricter or looser one. A reason that says something about your corpus or your
-pipeline earns credit; *"80% seemed reasonable"* does not.
+pipeline earns credit; _"80% seemed reasonable"_ does not.
 
 > Missing your own targets next unit costs you nothing. Setting a target so
 > easy you can't miss it does.
@@ -23,20 +23,22 @@ For at least 4 of my 5 test questions, the retrieved chunks include one that
 contains the answer.
 
 **Why this target:**
+
 <!-- e.g. "One of my questions is about a topic only two documents mention, so
      I expect that one to be hard." -->
 
----
+We cannot expect every question to have an answer, however, most questions will be relevant and answerable by the docs, therefore, 4/5.
 
 ## 2. Every answer names a source
 
 Every answer the system produces names at least one source document.
 
 **Why this target:**
+
 <!-- Why all five and not four? What about your setup makes that achievable —
      or what would have to go wrong for it not to be? -->
 
----
+This target is needed because every answer must be backed by evidence in the documents, so there is no halucination.
 
 ## 3. The relevance gate stops out-of-corpus questions
 
@@ -50,12 +52,13 @@ in at least 4 of 5 tries.
      just keep five of them, or the "4 of 5" above has nothing to be 4 of. -->
 
 **Why this target:**
+
 <!-- What did your distances look like when you set the cutoff in Milestone 4?
      Was there a clean gap, or did the two groups overlap? -->
 
----
+This is to also make sure the model doesn't halucinate to just come up with an unsupported answer.c
 
-## 4. Something about your chunks
+## 4. Full sentence chunks
 
 <!-- YOU WRITE THIS ONE.
 
@@ -69,15 +72,17 @@ in at least 4 of 5 tries.
        - "No chunk is shorter than 200 characters, since anything below that
           in my corpus turned out to be a heading with no content under it." -->
 
-
+All 5 sampled chunks start and end on a full sentence (nothing cut mid-word or mid-sentence), and each one names the town or topic it's about.
 
 **Why this target:**
 
-
+Most answers in the city guides are a single sentence ("Kestrelford's bakery
+sells out by 11am"), so a cut through that sentence means no chunk contains the
+answer.
 
 ---
 
-## 5. Your choice
+## 5. Answer includes source
 
 <!-- YOU WRITE THIS ONE TOO.
 
@@ -87,11 +92,12 @@ in at least 4 of 5 tries.
      present — anything, as long as it names a number or an observable
      outcome. -->
 
-
+Every answer ends with one line listing every document it used, like
+`Sources: guide_kestrelford.md, guide_eating.md`.
 
 **Why this target:**
 
-
+A fixed `Sources:` line makes that quick to check for more information and to verify the information.
 
 ---
 
