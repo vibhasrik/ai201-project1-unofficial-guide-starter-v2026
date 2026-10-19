@@ -277,8 +277,9 @@ GROUNDING_INSTRUCTION = """You answer questions using only the documents provide
 
 Rules:
 - Use only the information in the documents below. Do not use anything you know from elsewhere.
-- If the documents don't cover the question, say you don't have enough information. Do not guess.
-- Name the document your answer came from, using the filename given in each excerpt.
+- If the documents don't cover the question, say you don't have enough information and end with exactly "Sources: none". Do not guess, and do not list documents that didn't contain the answer.
+- If the documents disagree with each other, say so and give each version with its filename. Do not pick one.
+- End with one line listing every document you used, by the filename given in each excerpt, like: Sources: guide_a.md, guide_b.md
 - Be brief. Two or three sentences is usually enough."""
 
 

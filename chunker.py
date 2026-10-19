@@ -22,6 +22,7 @@ to it, write down what you saw, and move on. That's a real observation about
 your pipeline, not giving up.
 """
 
+import re
 from dataclasses import dataclass
 
 import config
@@ -96,8 +97,28 @@ def split_documents(documents: list[Document]) -> list[Chunk]:
       - Is the useful information in one sentence, or spread over a paragraph?
       - Would splitting on paragraph breaks keep more thoughts intact than
         splitting on a character count?
+
+    One chunk per `##` section, prefixed with the document's `#` title so a
+    section like "Eat and drink" still says which town it's about. Sections in
+    city_guides top out around 700 characters, so none need splitting further.
     """
-    return fallback_split(documents)
+    chunks: list[Chunk] = []
+    for doc in documents:
+        sections = re.split(r"\n(?=## )", doc.text)
+        title = sections[0].splitlines()[0].lstrip("# ").strip()
+        # The opening section repeats the title; drop that line. A title with
+        # no intro under it leaves nothing to retrieve, so it's skipped.
+        bodies = [s.removeprefix(f"# {title}").strip() for s in sections]
+        for index, body in enumerate(b for b in bodies if b):
+            chunks.append(
+                Chunk(
+                    text=f"{title}\n{body}",
+                    source=doc.source,
+                    index=index,
+                    produced_by="chunker.py::split_documents",
+                )
+            )
+    return chunks
 
 
 def describe(chunks: list[Chunk]) -> str:
